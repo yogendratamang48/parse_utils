@@ -4,8 +4,8 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="parse-utils-yogen48",
-    version="0.0.1",
+    name="parse-utils",
+    version="0.0.5",
     author="Yogendra Tamang",
     author_email="48yogen@gmail.com",
     description="Page Parser Utils For scraping",
@@ -13,6 +13,9 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/yogendratamang48/parse_utils.git",
     packages=setuptools.find_packages(),
+    install_requires=[
+        'lxml'
+    ],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

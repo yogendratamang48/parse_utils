@@ -1,5 +1,7 @@
 ### Parse Utilities (ParseUtils)
 This is a package helps you extracting python dict from html/xml contents
+### Installation
+>`pip install parse-utils` 
 
 ### Usage
 ```python

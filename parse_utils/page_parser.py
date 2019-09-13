@@ -37,6 +37,10 @@ class PageParser:
                         _raw = self.clean_data(_raw)
                         raw[_idx] = _raw
                 raw = [_.strip() for _ in raw if _.strip()]
-                _item[k] = raw[0]
-                break
+                if raw:
+                    _item[k] = raw[0]
+                    break
+                else:
+                    continue
+               
         return _item

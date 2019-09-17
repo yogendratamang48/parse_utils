@@ -2,8 +2,11 @@ from lxml import html
 from lxml.html import HtmlElement
 
 class PageParser:
-    def __init__(self, page_content):
-        self._selector = html.fromstring(page_content)
+    def __init__(self, page_content, selector=None):
+        if selector:
+            self._selector = page_content
+        else:
+            self._selector = html.fromstring(page_content)
     
     def clean_data(self, raw, linebreaks=False):
         joiner = ' '

@@ -13,7 +13,7 @@ class PageParser:
         raw = [r.strip() for r in raw.split() if r.strip()!='']
         return (' '.join(raw))
 
-    def extract_dict(self, config, item=None):
+    def extract_dict(self, config, item=None, list=False):
         '''
         extracts attributes from selector as per in config
         '''
@@ -38,7 +38,10 @@ class PageParser:
                         raw[_idx] = _raw
                 raw = [_.strip() for _ in raw if _.strip()]
                 if raw:
-                    _item[k] = raw[0]
+                    if self.list:
+                        _item[k] = raw[:]
+                    else:
+                        _item[k] = raw[0]
                     break
                 else:
                     continue

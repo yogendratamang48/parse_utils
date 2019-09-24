@@ -1,6 +1,8 @@
 from lxml import html
 from lxml.html import HtmlElement
 
+
+
 class PageParser:
     def __init__(self, page_content, selector=None):
         if selector:
@@ -16,7 +18,7 @@ class PageParser:
         raw = [r.strip() for r in raw.split() if r.strip()!='']
         return (' '.join(raw))
 
-    def extract_dict(self, config, item=None, list=False):
+    def extract_dict(self, config, item=None, is_list=None):
         '''
         extracts attributes from selector as per in config
         '''
@@ -41,7 +43,7 @@ class PageParser:
                         raw[_idx] = _raw
                 raw = [_.strip() for _ in raw if _.strip()]
                 if raw:
-                    if self.list:
+                    if is_list:
                         _item[k] = raw[:]
                     else:
                         _item[k] = raw[0]

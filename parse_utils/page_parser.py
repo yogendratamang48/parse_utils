@@ -52,3 +52,25 @@ class PageParser:
                     continue
                
         return _item
+
+    def extract_dict_from_json(self, config, item=None, is_list=None):
+        """
+        extracts json data
+        """
+        if not item:
+            _item = dict()
+        else:
+            _item = {** item }
+        for _k, _pathlist in config.items():
+            if _pathlist[0].__class__ != list:
+                _pathlist = [_pathlist]
+            for _paths in _pathlist:
+                tmp = self._selector
+                for _path in _paths:
+                    tmp = tmp.get(_path)
+                    if tmp is None:
+                        break
+                if tmp:
+                    _item[_k] = tmp
+                    break
+        return _item

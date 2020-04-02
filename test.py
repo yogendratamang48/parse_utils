@@ -24,12 +24,16 @@ def test_html_parser():
     config = {
         'header': ['//p[@id="header"]/text()'],
         'content': ['//p[@class="content"]'],
+        'body': ['//body'],
     }
     pparser = PageParser(html_data)
     item = pparser.extract_dict(config)
-    _item = pparser.extract_dict(config, is_list=True)
+
+    item2 = pparser.extract_dict(config, is_list=True)
+    print(item2['body'])
+    item3 = pparser.extract_dict(config, linebreaks=True)
+    print(item3['body'])
     print(item)
-    print(_item)
 
 def test_json_parser():
     '''

@@ -11,14 +11,21 @@ class PageParser:
             self._selector = html.fromstring(page_content)
     
     def clean_data(self, raw, linebreaks=False):
+        """
+        Input:
+            raw - raw html files
+            linebreaks - True makes formatting 
+        """
         joiner = ' '
         if linebreaks:
             joiner =  '\n'
-        raw = joiner.join(raw.itertext())
-        raw = [r.strip() for r in raw.split() if r.strip()!='']
-        return (' '.join(raw))
+            return '\n'.join(raw.itertext()).strip()
+        else:
+            raw = joiner.join(raw.itertext())
+            raw = [r.strip() for r in raw.split() if r.strip()!='']
+            return (' '.join(raw))
 
-    def extract_dict(self, config, item=None, is_list=None):
+    def extract_dict(self, config, item=None, is_list=None, linebreaks=False):
         '''
         extracts attributes from selector as per in config
         '''
@@ -39,7 +46,7 @@ class PageParser:
                 # Building list
                 for _idx, _raw in enumerate(raw):
                     if _raw.__class__ == HtmlElement:
-                        _raw = self.clean_data(_raw)
+                        _raw = self.clean_data(_raw, linebreaks=linebreaks)
                         raw[_idx] = _raw
                 raw = [_.strip() for _ in raw if _.strip()]
                 if raw:

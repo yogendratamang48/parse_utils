@@ -2,37 +2,29 @@ from lxml import html
 from lxml.html import HtmlElement
 
 
-
 class PageParser:
     def __init__(self, page_content, selector=None):
         if selector:
             self._selector = page_content
         else:
             self._selector = html.fromstring(page_content)
-    
+
     def clean_data(self, raw, linebreaks=False):
         """
         Input:
             raw - raw html files
             linebreaks - True makes formatting 
         """
-        joiner = ' '
-        if linebreaks:
-            joiner =  '\n'
-            return '\n'.join(raw.itertext()).strip()
-        else:
-            raw = joiner.join(raw.itertext())
-            raw = [r.strip() for r in raw.split() if r.strip()!='']
-            return (' '.join(raw))
+        return raw.text_content().strip()
 
     def extract_dict(self, config, item=None, is_list=None, linebreaks=False):
-        '''
+        """
         extracts attributes from selector as per in config
-        '''
+        """
         if not item:
             _item = dict()
         else:
-            _item = {** item }
+            _item = {**item}
         for k, v in config.items():
             if v.__class__ != list:
                 v = [v]
@@ -57,7 +49,7 @@ class PageParser:
                     break
                 else:
                     continue
-               
+
         return _item
 
     def extract_dict_from_json(self, config, item=None, is_list=None):
@@ -67,7 +59,7 @@ class PageParser:
         if not item:
             _item = dict()
         else:
-            _item = {** item }
+            _item = {**item}
         for _k, _pathlist in config.items():
             if _pathlist[0].__class__ != list:
                 _pathlist = [_pathlist]

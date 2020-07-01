@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="parse-utils",
-    version="1.01",
+    version="1.02",
     author="Yogendra Tamang",
     author_email="48yogen@gmail.com",
     description="Page Parser Utils For scraping, List index update",
@@ -21,5 +21,5 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=3.6',
+    python_requires='>=3.5',
 )

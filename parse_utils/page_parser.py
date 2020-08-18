@@ -9,6 +9,10 @@ class PageParser:
         else:
             self._selector = html.fromstring(page_content)
 
+    def extract_items():
+        """
+        """
+
     def clean_data(self, raw, linebreaks=False):
         """
         Input:
@@ -73,3 +77,25 @@ class PageParser:
                     _item[_k] = tmp
                     break
         return _item
+
+
+class ItemExtracter:
+    @staticmethod
+    def extract_items(rows_xpath, config, page_content, selector=None, is_list=None):
+        """generator returns items
+        config should have following properties
+        rows_xpath: str
+        config: dict
+        page_content: selector or bytestring or string
+        selector: based on page_content type, set to True if page_content is selector
+        """
+        if selector:
+            _selector = page_content
+        else:
+            _selector = html.fromstring(page_content)
+        rows = _selector.xpath(rows_xpath)
+        # Use existing method
+        for row in rows:
+            _parser = PageParser(row, selector=True)
+            item = _parser.extract_dict(config, is_list=is_list)
+            yield item

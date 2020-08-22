@@ -79,23 +79,32 @@ class PageParser:
         return _item
 
 
-class ItemExtracter:
+class ItemExtractor:
     @staticmethod
-    def extract_items(rows_xpath, config, page_content, selector=None, is_list=None):
+    def extract_items(rows_xpaths, config, page_content, selector=None,
+                      is_list=None, item=None):
         """generator returns items
         config should have following properties
-        rows_xpath: str
+        rows_xpaths: list --> goes for xpath giving first results
         config: dict
         page_content: selector or bytestring or string
         selector: based on page_content type, set to True if page_content is selector
+        is_list: bool to check if the return should be in list or not
+        item: dict initial values
         """
         if selector:
             _selector = page_content
         else:
             _selector = html.fromstring(page_content)
-        rows = _selector.xpath(rows_xpath)
+        if type(rows_xpaths) != list:
+            rows_xpaths = [rows_xpaths]
+        rows =  []
+        for rows_xpath in rows_xpaths: 
+            rows = _selector.xpath(rows_xpath)
+            if rows:
+                break
         # Use existing method
         for row in rows:
             _parser = PageParser(row, selector=True)
-            item = _parser.extract_dict(config, is_list=is_list)
-            yield item
+            _item = _parser.extract_dict(config, is_list=is_list, item=item)
+            yield _item

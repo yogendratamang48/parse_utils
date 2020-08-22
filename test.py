@@ -1,4 +1,4 @@
-from parse_utils.page_parser import PageParser, ItemExtracter
+from parse_utils.page_parser import PageParser, ItemExtractor
 
 html_data = """
 <html>
@@ -71,13 +71,49 @@ def test_items_parser():
             "link": ["./a/@href"],
         },
     }
-    for item in ItemExtracter.extract_items(
+    for item in ItemExtractor.extract_items(
         config["results"], config["fields"], html_rows_data
     ):
         print(item)
 
 
+def test_items_parser_with_seed():
+    """
+    """
+    seed_dict = {'default_key': 'default_value'}
+    config = {
+        "results": "//ul/li",
+        "fields": {
+            "title": ["./a/text()"],
+            "description": ["./p"],
+            "link": ["./a/@href"],
+        },
+    }
+    for item in ItemExtractor.extract_items(
+        config["results"], config["fields"], html_rows_data, item=seed_dict
+    ):
+        print(item)
+
+def test_items_parser_with_results():
+    """
+    """
+    seed_dict = {'default': 'default_list'}
+    config = {
+        "results": ["//apple/ball", "//ul/li"],
+        "fields": {
+            "title": ["./a/text()"],
+            "description": ["./p"],
+            "link": ["./a/@href"],
+        },
+    }
+    for item in ItemExtractor.extract_items(
+        config["results"], config["fields"], html_rows_data, item=seed_dict
+    ):
+        print(item)
+
 if __name__ == "__main__":
     test_html_parser()
     test_json_parser()
     test_items_parser()
+    test_items_parser_with_seed()
+    test_items_parser_with_results()

@@ -12,6 +12,14 @@ class PageParser:
     def extract_items():
         """
         """
+        pass
+
+    def markdown_clean(self, raw):
+        """convert html to markdown
+        """
+        from markdownify import markdownify as md
+        return md(html.tostring(raw)).strip()
+
 
     def clean_data(self, raw, linebreaks=False):
         """
@@ -42,7 +50,10 @@ class PageParser:
                 # Building list
                 for _idx, _raw in enumerate(raw):
                     if _raw.__class__ == HtmlElement:
-                        _raw = self.clean_data(_raw, linebreaks=linebreaks)
+                        if k == "description":
+                            _raw = self.markdown_clean(_raw)
+                        else:
+                            _raw = self.clean_data(_raw, linebreaks=linebreaks)
                         raw[_idx] = _raw
                 raw = [_.strip() for _ in raw if _.strip()]
                 if raw:

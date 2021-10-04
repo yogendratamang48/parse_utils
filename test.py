@@ -4,7 +4,7 @@ html_data = """
 <html>
     <head><title>This is title</title></head>
     <body>
-        <p id="header">This is header id</p>
+        <p id="header"><b>This is header id<b></p>
         <p id="header">This is header2</p>
         <p class="content">This is content</p>
     </body>

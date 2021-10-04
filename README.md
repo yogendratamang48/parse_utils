@@ -47,7 +47,7 @@ def test_html_parser():
     config = {
         "header": ['//p[@id="header"]/text()'],
         "content": ['//p[@class="content"]'],
-        "body": ["//body"],
+        "description": ["//body"],
     }
     pparser = PageParser(html_data)
     item = pparser.extract_dict(config)

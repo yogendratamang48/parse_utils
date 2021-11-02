@@ -29,7 +29,8 @@ class PageParser:
         """
         return raw.text_content().strip()
 
-    def extract_dict(self, config, item=None, is_list=None, linebreaks=False):
+    def extract_dict(self, config, item=None, is_list=None, linebreaks=False,
+                     description_format="markdown"):
         """
         extracts attributes from selector as per in config
         """
@@ -50,7 +51,7 @@ class PageParser:
                 # Building list
                 for _idx, _raw in enumerate(raw):
                     if _raw.__class__ == HtmlElement:
-                        if k == "description":
+                        if k == "description" and description_format == "markdown":
                             _raw = self.markdown_clean(_raw)
                         else:
                             _raw = self.clean_data(_raw, linebreaks=linebreaks)

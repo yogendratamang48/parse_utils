@@ -82,7 +82,12 @@ class PageParser:
             for _paths in _pathlist:
                 tmp = self._selector
                 for _path in _paths:
-                    tmp = tmp.get(_path)
+                    if tmp.__class__ == list and _path.__class__ == int:
+                        tmp = tmp[_path]
+                    elif tmp.__class__ == list:
+                        tmp = tmp[0]
+                    else:
+                        tmp = tmp.get(_path)
                     if tmp is None:
                         break
                 if tmp:

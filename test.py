@@ -1,4 +1,6 @@
 from parse_utils.page_parser import PageParser, ItemExtractor
+import pudb
+pudb.set_trace()
 
 html_data = """
 <html>
@@ -28,6 +30,7 @@ html_rows_data = """
 
 
 json_data = {"name": "Yogendra", "address": {"country": "Nepal", "city": "Pokhara",}}
+json_data_list = {"name": "Yogendra", "address": {"country": "Nepal", "city": "Pokhara",}, "response": [{ "fName": "Yogendra"}]}
 
 
 def test_html_parser():
@@ -58,6 +61,16 @@ def test_json_parser():
     jparser = PageParser(json_data, selector=True)
     item = jparser.extract_dict_from_json(config)
     print(item)
+
+def test_json_parser_list():
+    """
+    """
+    config = {
+        "fName": ["response", 0, "fName"],
+    }
+    jparser = PageParser(json_data_list, selector=True)
+    item = jparser.extract_dict_from_json(config)
+    print("List Check: ", item)
 
 
 def test_items_parser():
@@ -114,6 +127,7 @@ def test_items_parser_with_results():
 if __name__ == "__main__":
     test_html_parser()
     test_json_parser()
+    test_json_parser_list()
     test_items_parser()
     test_items_parser_with_seed()
     test_items_parser_with_results()

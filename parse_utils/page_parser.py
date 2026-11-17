@@ -6,7 +6,7 @@ import copy
 import re
 import warnings
 from collections.abc import Iterator, Mapping, Sequence
-from typing import Any, Union
+from typing import Any
 
 from lxml import etree, html
 
@@ -14,7 +14,7 @@ __all__ = ["FieldSpec", "ItemExtractor", "PageParser"]
 
 #: A field is one XPath, a list of fallback XPaths, or a dict with options:
 #: ``{"xpath": str | list[str], "format": "text" | "markdown"}``.
-FieldSpec = Union[str, Sequence[str], Mapping[str, Any]]
+FieldSpec = str | Sequence[str] | Mapping[str, Any]
 
 _FORMATS = ("text", "markdown")
 _FIELD_KEYS = {"xpath", "format"}

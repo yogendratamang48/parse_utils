@@ -9,15 +9,15 @@ description = "Extract Python dicts from HTML, XML and JSON using declarative XP
 readme = "README.md"
 license = { file = "LICENSE" }
 authors = [{ name = "Yogendra Tamang", email = "48yogen@gmail.com" }]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 dependencies = ["lxml>=4.9"]
 classifiers = [
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Topic :: Text Processing :: Markup :: HTML",
@@ -47,7 +47,7 @@ filterwarnings = ["error"]
 
 [tool.ruff]
 line-length = 110
-target-version = "py39"
+target-version = "py310"
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "B", "UP", "SIM"]

@@ -11,7 +11,7 @@ pip install parse-utils
 pip install "parse-utils[markdown]"   # optional: HTML → Markdown output
 ```
 
-Requires Python 3.9+.
+Requires Python 3.10+.
 
 ## Quick start
 

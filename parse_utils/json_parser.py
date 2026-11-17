@@ -4,14 +4,14 @@ from __future__ import annotations
 
 import json
 from collections.abc import Mapping, Sequence
-from typing import Any, Union
+from typing import Any
 
 __all__ = ["JsonParser", "JsonPath"]
 
 #: A path is a single key, or a list of keys (str) and list indices (int).
 #: A field is one path or a list of fallback paths, e.g.
 #: ``"name"``, ``["address", "city"]``, ``[["a", 0], ["b"]]``.
-JsonPath = Union[str, Sequence[Union[str, int]]]
+JsonPath = str | Sequence[str | int]
 
 _MISSING = object()
 

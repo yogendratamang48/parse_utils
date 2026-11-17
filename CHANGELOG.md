@@ -9,7 +9,7 @@
 - `markdownify` is now an optional dependency: `pip install "parse-utils[markdown]"`.
 - JSON paths no longer jump to the first list element when a string key meets a
   list. Use an explicit index: `["response", 0, "fName"]`.
-- Python 3.9+ is required.
+- Python 3.10+ is required (3.9 is end-of-life).
 
 ### Deprecated (still work, emit `DeprecationWarning`)
 - `PageParser(data, selector=True)` + `extract_dict_from_json` → `JsonParser(data).extract_dict(config)`
@@ -22,7 +22,7 @@
 - `JsonParser`, with `from_string`.
 - `linebreaks=True` now works: block elements and `<br>` go on separate lines.
 - Type hints and a `py.typed` marker; `parse_utils.__version__`.
-- Test suite, CI (pytest on 3.9–3.13, ruff, mypy) and a PyPI publish workflow.
+- Test suite, CI (pytest on 3.10–3.14, ruff, mypy) and a PyPI publish workflow.
 
 ### Fixed
 - Markdown and text output included text that follows the selected element (its tail).

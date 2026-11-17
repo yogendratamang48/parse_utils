@@ -1,6 +1,12 @@
 # Publishes to PyPI when a version tag (e.g. v2.0.0) is pushed.
-# Requires a trusted publisher configured on PyPI for this repo/workflow:
-# https://docs.pypi.org/trusted-publishers/
+#
+# One-time setup:
+#  1. PyPI → parse-utils → Manage → Publishing → add a GitHub trusted publisher:
+#     owner yogendratamang48, repo parse_utils, workflow publish.yml, environment pypi
+#     https://docs.pypi.org/trusted-publishers/
+#  2. GitHub → Settings → Environments → create "pypi" (optionally require approval).
+#
+# Release: bump parse_utils.__version__, merge, then `git tag vX.Y.Z && git push origin vX.Y.Z`.
 name: Publish
 
 on:
@@ -8,16 +14,53 @@ on:
     tags: ["v*"]
 
 jobs:
-  publish:
+  test:
     runs-on: ubuntu-latest
-    environment: pypi
-    permissions:
-      id-token: write
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.14"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - run: pip install -e ".[dev]"
+      - run: pytest
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - run: pip install build
+      - name: Check tag matches package version
+        run: |
+          version=$(python -c "import re; print(re.search(r'__version__ = \"(.+?)\"', open('parse_utils/__init__.py').read())[1])")
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match __version__ $version"
+            exit 1
+          fi
+      - run: pip install build twine
       - run: python -m build
+      - run: twine check --strict dist/*
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/parse-utils/
+    permissions:
+      id-token: write # trusted publishing; no API token needed
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
       - uses: pypa/gh-action-pypi-publish@release/v1

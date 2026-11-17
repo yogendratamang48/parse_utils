@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "parse-utils"
+dynamic = ["version"]
+description = "Extract Python dicts from HTML, XML and JSON using declarative XPath/key-path configs"
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "Yogendra Tamang", email = "48yogen@gmail.com" }]
+requires-python = ">=3.10"
+dependencies = ["lxml>=4.9"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Text Processing :: Markup :: HTML",
+    "Typing :: Typed",
+]
+
+[project.optional-dependencies]
+markdown = ["markdownify>=0.11"]
+dev = ["markdownify>=0.11", "pytest>=7", "ruff>=0.5", "mypy>=1.8", "lxml-stubs"]
+
+[project.urls]
+Homepage = "https://github.com/yogendratamang48/parse_utils"
+Changelog = "https://github.com/yogendratamang48/parse_utils/blob/master/CHANGELOG.md"
+
+[tool.setuptools]
+packages = ["parse_utils"]
+
+[tool.setuptools.dynamic]
+version = { attr = "parse_utils.__version__" }
+
+[tool.setuptools.package-data]
+parse_utils = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+filterwarnings = ["error"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "SIM"]
+
+[tool.mypy]
+strict = true
